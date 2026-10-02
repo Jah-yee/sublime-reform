@@ -67,16 +67,22 @@ class MoveWordRightCommand(sublime_plugin.TextCommand):
         # We go from right to left to correctly handle overlapping regions
         for pos in reversed(list_cursors(self.view)):
             word1 = word_at(self.view, pos)
+            if not word1:
+                continue
             word2 = word_f(self.view, pos)
-            swap_regions(self.view, edit, word1, word2)
+            if word2:
+                swap_regions(self.view, edit, word1, word2)
 
 
 class MoveWordLeftCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         for pos in list_cursors(self.view):
             word1 = word_at(self.view, pos)
+            if not word1:
+                continue
             word2 = word_b(self.view, word1.begin())
-            swap_regions(self.view, edit, word2, word1)
+            if word2:
+                swap_regions(self.view, edit, word2, word1)
 
 
 ### Block commands
