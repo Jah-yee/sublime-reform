@@ -68,6 +68,8 @@ class MoveWordRightCommand(sublime_plugin.TextCommand):
         for pos in reversed(list_cursors(self.view)):
             word1 = word_at(self.view, pos)
             word2 = word_f(self.view, pos)
+            if not word1 or not word2:
+                continue
             swap_regions(self.view, edit, word1, word2)
 
 
@@ -75,7 +77,11 @@ class MoveWordLeftCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         for pos in list_cursors(self.view):
             word1 = word_at(self.view, pos)
+            if not word1:
+                continue
             word2 = word_b(self.view, word1.begin())
+            if not word2:
+                continue
             swap_regions(self.view, edit, word2, word1)
 
 
