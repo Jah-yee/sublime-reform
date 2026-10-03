@@ -141,5 +141,8 @@ def iffy(pred, action=EMPTY, default=identity):
 def isa(*types):
     return lambda x: isinstance(x, types)
 
-from collections.abc import Iterable
+try:
+    from collections.abc import Iterable  # Python 3.3+
+except ImportError:
+    from collections import Iterable      # Python < 3.3 (Sublime Text < 4000)
 iterable = isa(Iterable)
