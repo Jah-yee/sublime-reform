@@ -68,6 +68,11 @@ class MoveWordRightCommand(sublime_plugin.TextCommand):
         for pos in reversed(list_cursors(self.view)):
             word1 = word_at(self.view, pos)
             word2 = word_f(self.view, pos)
+            # Skip if cursor is not on a word or next "word" is just whitespace
+            if not word1 or not word2:
+                continue
+            if not self.view.substr(word2).strip():
+                continue
             swap_regions(self.view, edit, word1, word2)
 
 
